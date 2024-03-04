@@ -21,5 +21,12 @@ WORKDIR /app
 
 COPY --from=stage1 /app/build/libs/*.jar app.jar
 
+#docker run -d -p 8080:8080 -v C:/Users/LifeD/IdeaProjects/Ordering_Docker/temp:/temp order_backend:v1
+VOLUME /tmp
+
 # CMD 또는 ENTRYPOINT를 통해서 컨테이너를 실행
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
+
+
+# docker 실행시 db 정보를 환경변수로 주입
+# docker run -d -p 8080:8080 -e SPRING_DATABASE_URL=jdbc:mariadb://host.docker.internal:3306/ordering -v C:/Users/LifeD/IdeaProjects/Ordering_Docker/temp:/temp order_backend:v1

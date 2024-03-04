@@ -37,7 +37,7 @@ export default {
         this.$router.push("/items/manage");
       } catch (e) {
         console.log(e)
-        alert("입력값 확인 필요")
+        alert("아이템 등록 입력값 확인 필요.")
       }
     }
   }

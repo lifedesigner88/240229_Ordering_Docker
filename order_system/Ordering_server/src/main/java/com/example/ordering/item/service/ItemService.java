@@ -119,11 +119,7 @@ public class ItemService {
     private void savefile(Item itemTemp, MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         Long itemId = itemRepo.save(itemTemp).getId();
-        Path path = Paths
-                .get(
-                        "C:\\Users\\LifeD\\IdeaProjects\\240131_Ordering_Spring\\src\\main\\resources\\temp",
-//                        "C:\\Users\\LifeD\\IdeaProjects\\SpringBoot_Book\\240131_Ordering_Spring\\src\\main\\resources\\temp",
-                        itemId + "_" + fileName);
+        Path path = Paths.get("/temp/", itemId + "_" + fileName);
         itemTemp.setImagePath(path.toString());
         try {
             byte[] bytes = multipartFile.getBytes();
