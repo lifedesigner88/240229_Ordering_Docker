@@ -11,29 +11,35 @@ services:
     environment:
 #      - SPRING_DATASOURCE_URL=jdbc:mariadb://host.docker.internal:3306/ordering
 #      - docker-compose 로 네트워크를 결합하였기 때문에 mydb라는 서비스명으로 host 호출 가능.
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://mydb:3306/ordering
+#      - SPRING_DATASOURCE_URL=jdbc:mariadb://mydb:3306/ordering_compose
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mydb:3306/ordering_compose
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     volumes:
-      - C:/Users/LifeD/IdeaProjects/Ordering_Docker/temp:/temp
+      - image-path:/tmp
+#      - C:/Users/LifeD/IdeaProjects/Ordering_Docker/temp:/temp
     depends_on:
       - mydb     # mydb가 실행한뒤에 실행된다.
-
-#    docker-compose의 특정 경로의 image-path라는 이름으로 /tmp와 매핑
-#      - image-path:/tmp
-#    직접 매핑
-#volumes:
-#  image-path:
 
   frontend:
     build:
       context: ./Ordering_front
       dockerfile: Dockerfile
     ports:
-      - "8081:8080"
+      - "8081:8081"
 
   mydb:
-    image: mariadb
+
+
+#    image: mariadb
+#    environment:
+#      - MARIADB_ROOT_PASSWORD=1234
+#      - MARIADB_DATABASE=ordering_compose
+
+    image: mysql:5.7       # 이것은 CLI 도구가 포함되어 있는 버전.
     environment:
-      - MARIADB_ROOT_PASSWORD=1234
-      - MARIADB_DATABASE=ordering_compose
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=ordering_compose
+
+volumes:
+  image-path:
